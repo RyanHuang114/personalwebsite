@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import { withBase } from '../../utils/base';
 import {
 	assertSequentialId,
 	formatDate,
@@ -37,7 +38,7 @@ const hasLinks = Boolean(project.data.doi || project.data.publicationLinks.lengt
 	width="reading"
 >
 	<article class="detail detail--research">
-		<a class="back-link" href="/research/">Research</a>
+		<a class="back-link" href={withBase('/research/')}>Research</a>
 
 		<header class="detail-header">
 			<p class="eyebrow">Project {project.id}</p>

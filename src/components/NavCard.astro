@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/base';
+
 interface NavLink {
 	label: string;
 	href: string;
@@ -18,7 +20,7 @@ const groupLabel = clueLink ? `${clueLink.label} ${primaryLink.label}` : undefin
 
 <li class:list={['nav-card', { 'nav-card--clue': hasClue }]}>
 	<span class="nav-card__art" aria-hidden="true">
-		<img src={icon} alt="" width="96" height="96" decoding="async" />
+		<img src={withBase(icon)} alt="" width="96" height="96" decoding="async" />
 	</span>
 
 	{
@@ -26,7 +28,7 @@ const groupLabel = clueLink ? `${clueLink.label} ${primaryLink.label}` : undefin
 			<div class="nav-card__phrase" role="group" aria-label={groupLabel}>
 				<a
 					class="nav-card__word-link"
-					href={clueLink.href}
+					href={withBase(clueLink.href)}
 					target={clueLink.newTab ? '_blank' : undefined}
 					rel={clueLink.newTab ? 'noopener noreferrer' : undefined}
 				>
@@ -39,7 +41,7 @@ const groupLabel = clueLink ? `${clueLink.label} ${primaryLink.label}` : undefin
 				</a>
 				<a
 					class="nav-card__card-link"
-					href={primaryLink.href}
+					href={withBase(primaryLink.href)}
 					target={primaryLink.newTab ? '_blank' : undefined}
 					rel={primaryLink.newTab ? 'noopener noreferrer' : undefined}
 				>
@@ -54,7 +56,7 @@ const groupLabel = clueLink ? `${clueLink.label} ${primaryLink.label}` : undefin
 		) : (
 			<a
 				class="nav-card__link nav-card__link--full"
-				href={primaryLink.href}
+				href={withBase(primaryLink.href)}
 				target={primaryLink.newTab ? '_blank' : undefined}
 				rel={primaryLink.newTab ? 'noopener noreferrer' : undefined}
 			>

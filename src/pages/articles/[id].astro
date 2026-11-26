@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
 import TableOfContents from '../../components/TableOfContents.astro';
+import { withBase } from '../../utils/base';
 import {
 	assertSequentialId,
 	formatDate,
@@ -37,7 +38,7 @@ const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.
 	section="articles"
 >
 	<article class="detail detail--article">
-		<a class="back-link" href="/articles/">Articles</a>
+		<a class="back-link" href={withBase('/articles/')}>Articles</a>
 
 		<header class="detail-header">
 			<p class="eyebrow">Article {article.id}</p>

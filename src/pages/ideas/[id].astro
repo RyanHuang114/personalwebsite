@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import { withBase } from '../../utils/base';
 import {
 	assertSequentialId,
 	formatDate,
@@ -43,7 +44,7 @@ const { Content } = await render(idea);
 	width="reading"
 >
 	<article class="detail detail--note">
-		<a class="back-link" href="/ideas/">Ideas</a>
+		<a class="back-link" href={withBase('/ideas/')}>Ideas</a>
 
 		<header class="detail-header detail-header--note">
 			<p class="eyebrow">Note {idea.id}</p>

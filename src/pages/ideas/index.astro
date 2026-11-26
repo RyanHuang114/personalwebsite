@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import { withBase } from '../../utils/base';
 import {
 	assertSequentialId,
 	byDateDescending,
@@ -31,7 +32,7 @@ ideas.forEach((idea) => assertSequentialId('ideas', idea.id));
 			<ul class="idea-list">
 				{ideas.map((idea) => (
 					<li>
-						<a class="idea-note" href={`/ideas/${idea.id}/`}>
+						<a class="idea-note" href={withBase(`/ideas/${idea.id}/`)}>
 							<span class="idea-note__meta">
 								<span>Note {idea.id}</span>
 								<time datetime={formatDateAttribute(idea.data.date)}>

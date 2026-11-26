@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { withBase } from '../utils/base';
 
 interface Props {
 	title?: string;
@@ -10,6 +11,8 @@ const {
 	title = 'Personal Website',
 	description = 'A personal website for research, writing, and strange ideas.',
 } = Astro.props;
+
+const backgroundImage = `url(${withBase('/images/home-bg.jpg')})`;
 ---
 
 <!doctype html>
@@ -19,12 +22,12 @@ const {
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="description" content={description} />
 		<meta name="theme-color" content="#0f1214" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" sizes="any" />
+		<link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+		<link rel="icon" href={withBase('/favicon.ico')} sizes="any" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body>
+	<body style={`--site-background-image: ${backgroundImage};`}>
 		<slot />
 	</body>
 </html>

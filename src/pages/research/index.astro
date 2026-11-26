@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import { withBase } from '../../utils/base';
 import {
 	assertSequentialId,
 	byDateDescending,
@@ -27,7 +28,7 @@ projects.forEach((project) => assertSequentialId('research', project.id));
 			<ul class="research-list">
 				{projects.map((project) => (
 					<li>
-						<a class="research-card" href={`/research/${project.id}/`}>
+						<a class="research-card" href={withBase(`/research/${project.id}/`)}>
 							<span class="research-card__field">
 								<span>Project {project.id}</span>
 								<span>{project.data.field}</span>

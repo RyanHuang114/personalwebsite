@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../utils/base';
+
 const year = new Date().getFullYear();
 ---
 
@@ -7,7 +9,7 @@ const year = new Date().getFullYear();
 		<p class="site-footer__note">Research, writing, and stray ideas.</p>
 		<div class="site-footer__meta">
 			<p>© {year} Personal Website</p>
-			<a href="/">Return home</a>
+			<a href={withBase('/')}>Return home</a>
 		</div>
 	</div>
 </footer>

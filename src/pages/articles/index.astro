@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ContentLayout from '../../layouts/ContentLayout.astro';
+import { withBase } from '../../utils/base';
 import {
 	assertSequentialId,
 	byDateDescending,
@@ -27,7 +28,7 @@ articles.forEach((article) => assertSequentialId('articles', article.id));
 			<ol class="article-list">
 				{articles.map((article) => (
 					<li>
-						<a class="article-row" href={`/articles/${article.id}/`}>
+						<a class="article-row" href={withBase(`/articles/${article.id}/`)}>
 							<time
 								class="article-row__date"
 								datetime={formatDateAttribute(article.data.date)}
