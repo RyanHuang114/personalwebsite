@@ -6,6 +6,8 @@ import rehypeKatex from 'rehype-katex';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://ryanhuang114.github.io',
+	base: '/personalwebsite',
 	markdown: {
 		// Astro 7 uses Sätteri by default. The unified processor is required for
 		// remark/rehype plugins such as math rendering.
