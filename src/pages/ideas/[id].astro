@@ -1,0 +1,74 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import {
+	assertSequentialId,
+	formatDate,
+	formatDateAttribute,
+} from '../../utils/content';
+
+export async function getStaticPaths() {
+	// Deliberately exclude private entries from route generation. There is no
+	// password or encryption flow yet, so private content is not published.
+	const ideas = await getCollection('ideas', ({ data }) => data.visibility === 'public');
+
+	return ideas.map((idea) => {
+		assertSequentialId('ideas', idea.id);
+
+		return {
+			params: { id: idea.id },
+			props: { idea },
+		};
+	});
+}
+
+interface Props {
+	idea: CollectionEntry<'ideas'>;
+}
+
+const { idea } = Astro.props;
+
+if (idea.data.visibility !== 'public') {
+	throw new Error(`Private idea ${idea.id} cannot be rendered publicly.`);
+}
+
+const { Content } = await render(idea);
+---
+
+<ContentLayout
+	title={idea.data.title}
+	description={idea.data.description ?? 'A note from the Ideas section.'}
+	section="ideas"
+	width="reading"
+>
+	<article class="detail detail--note">
+		<a class="back-link" href="/ideas/">Ideas</a>
+
+		<header class="detail-header detail-header--note">
+			<p class="eyebrow">Note {idea.id}</p>
+			<h1 class="detail-title">{idea.data.title}</h1>
+			{idea.data.description && <p class="detail-description">{idea.data.description}</p>}
+
+			<div class="detail-meta">
+				<time datetime={formatDateAttribute(idea.data.date)}>
+					{formatDate(idea.data.date)}
+				</time>
+			</div>
+
+			{
+				idea.data.tags.length > 0 && (
+					<ul class="tag-list" aria-label="Tags">
+						{idea.data.tags.map((tag) => (
+							<li class="tag">{tag}</li>
+						))}
+					</ul>
+				)
+			}
+		</header>
+
+		<div class="prose prose--notes">
+			<Content />
+		</div>
+	</article>
+</ContentLayout>

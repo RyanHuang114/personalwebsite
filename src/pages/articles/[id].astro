@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import {
+	assertSequentialId,
+	formatDate,
+	formatDateAttribute,
+} from '../../utils/content';
+
+export async function getStaticPaths() {
+	const articles = await getCollection('articles');
+
+	return articles.map((article) => {
+		assertSequentialId('articles', article.id);
+
+		return {
+			params: { id: article.id },
+			props: { article },
+		};
+	});
+}
+
+interface Props {
+	article: CollectionEntry<'articles'>;
+}
+
+const { article } = Astro.props;
+const { Content, headings } = await render(article);
+const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+<ContentLayout
+	title={article.data.title}
+	description={article.data.description}
+	section="articles"
+>
+	<article class="detail detail--article">
+		<a class="back-link" href="/articles/">Articles</a>
+
+		<header class="detail-header">
+			<p class="eyebrow">Article {article.id}</p>
+			<h1 class="detail-title">{article.data.title}</h1>
+			<p class="detail-description">{article.data.description}</p>
+
+			<div class="detail-meta">
+				<time datetime={formatDateAttribute(article.data.date)}>
+					{formatDate(article.data.date)}
+				</time>
+			</div>
+
+			{
+				article.data.tags.length > 0 && (
+					<ul class="tag-list" aria-label="Tags">
+						{article.data.tags.map((tag) => (
+							<li class="tag">{tag}</li>
+						))}
+					</ul>
+				)
+			}
+		</header>
+
+		<div
+			class:list={[
+				'article-layout',
+				{ 'article-layout--no-toc': tocHeadings.length < 2 },
+			]}
+		>
+			{tocHeadings.length >= 2 && <TableOfContents headings={tocHeadings} />}
+
+			<div class="prose article-content">
+				<Content />
+			</div>
+		</div>
+	</article>
+</ContentLayout>

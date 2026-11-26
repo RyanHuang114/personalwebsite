@@ -1,0 +1,34 @@
+---
+import type { MarkdownHeading } from 'astro';
+
+interface Props {
+	headings: MarkdownHeading[];
+}
+
+const { headings } = Astro.props;
+const tocHeadings = headings.filter((heading) => heading.depth === 2 || heading.depth === 3);
+---
+
+{
+	tocHeadings.length > 0 && (
+		<aside class="toc">
+			<nav aria-labelledby="toc-title">
+				<p id="toc-title" class="toc__title">
+					On this page
+				</p>
+				<ol class="toc__list">
+					{tocHeadings.map((heading) => (
+						<li
+							class:list={[
+								'toc__item',
+								{ 'toc__item--nested': heading.depth === 3 },
+							]}
+						>
+							<a href={`#${heading.slug}`}>{heading.text}</a>
+						</li>
+					))}
+				</ol>
+			</nav>
+		</aside>
+	)
+}

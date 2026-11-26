@@ -1,0 +1,60 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import {
+	assertSequentialId,
+	byDateDescending,
+	formatDate,
+	formatDateAttribute,
+} from '../../utils/content';
+
+// Private entries receive neither a listing nor a route.
+const ideas = (
+	await getCollection('ideas', ({ data }) => data.visibility === 'public')
+).sort(byDateDescending);
+ideas.forEach((idea) => assertSequentialId('ideas', idea.id));
+---
+
+<ContentLayout
+	title="Ideas & Notes"
+	description="Informal thoughts, fragments, and miscellaneous notes."
+	section="ideas"
+	width="reading"
+>
+	<header class="page-header">
+		<p class="eyebrow">Notes</p>
+		<h1 class="page-title">Ideas &amp; Notes</h1>
+	</header>
+
+	{
+		ideas.length > 0 ? (
+			<ul class="idea-list">
+				{ideas.map((idea) => (
+					<li>
+						<a class="idea-note" href={`/ideas/${idea.id}/`}>
+							<span class="idea-note__meta">
+								<span>Note {idea.id}</span>
+								<time datetime={formatDateAttribute(idea.data.date)}>
+									{formatDate(idea.data.date)}
+								</time>
+							</span>
+							<h2 class="idea-note__title">{idea.data.title}</h2>
+							{idea.data.description && (
+								<p class="idea-note__description">{idea.data.description}</p>
+							)}
+							{idea.data.tags.length > 0 && (
+								<span class="tag-list">
+									{idea.data.tags.map((tag) => (
+										<span class="tag">{tag}</span>
+									))}
+								</span>
+							)}
+						</a>
+					</li>
+				))}
+			</ul>
+		) : (
+			<p class="empty-state">No public notes yet.</p>
+		)
+	}
+</ContentLayout>

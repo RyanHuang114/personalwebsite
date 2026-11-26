@@ -1,0 +1,51 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import {
+	assertSequentialId,
+	byDateDescending,
+	formatDate,
+	formatDateAttribute,
+} from '../../utils/content';
+
+const projects = (await getCollection('research')).sort(byDateDescending);
+projects.forEach((project) => assertSequentialId('research', project.id));
+---
+
+<ContentLayout
+	title="Research"
+	description="Research projects and notes."
+	section="research"
+>
+	<header class="page-header">
+		<p class="eyebrow">Index</p>
+		<h1 class="page-title">Research</h1>
+	</header>
+
+	{
+		projects.length > 0 ? (
+			<ul class="research-list">
+				{projects.map((project) => (
+					<li>
+						<a class="research-card" href={`/research/${project.id}/`}>
+							<span class="research-card__field">
+								<span>Project {project.id}</span>
+								<span>{project.data.field}</span>
+							</span>
+							<h2 class="research-card__title">{project.data.title}</h2>
+							<p class="research-card__description">{project.data.description}</p>
+							<span class="research-card__footer">
+								<time datetime={formatDateAttribute(project.data.date)}>
+									{formatDate(project.data.date)}
+								</time>
+								<span class="status">{project.data.status}</span>
+							</span>
+						</a>
+					</li>
+				))}
+			</ul>
+		) : (
+			<p class="empty-state">No research entries yet.</p>
+		)
+	}
+</ContentLayout>

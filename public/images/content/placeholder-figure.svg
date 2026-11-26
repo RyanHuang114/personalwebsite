@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#192123" />
+      <stop offset="1" stop-color="#0c1011" />
+    </linearGradient>
+    <linearGradient id="line" x1="312" y1="635" x2="1275" y2="240" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4F0E7" stop-opacity=".2" />
+      <stop offset=".55" stop-color="#F4F0E7" stop-opacity=".7" />
+      <stop offset="1" stop-color="#F4F0E7" stop-opacity=".28" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(1130 315) rotate(130) scale(540 330)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8DDC6" stop-opacity=".12" />
+      <stop offset="1" stop-color="#E8DDC6" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)" />
+  <rect width="1600" height="900" fill="url(#glow)" />
+
+  <g stroke="#F4F0E7" stroke-opacity=".065">
+    <path d="M200 170H1400M200 290H1400M200 410H1400M200 530H1400M200 650H1400M200 770H1400" />
+    <path d="M200 170V770M400 170V770M600 170V770M800 170V770M1000 170V770M1200 170V770M1400 170V770" />
+  </g>
+
+  <g stroke="#F4F0E7" stroke-opacity=".18" stroke-linecap="round">
+    <path d="M200 770H1400" />
+    <path d="M200 170V770" />
+  </g>
+
+  <path
+    d="M214 704C302 678 350 711 438 650C530 586 607 618 696 545C790 469 852 510 934 436C1022 357 1117 383 1194 310C1248 258 1305 244 1386 234"
+    stroke="url(#line)"
+    stroke-width="3"
+    stroke-linecap="round"
+  />
+  <path
+    d="M214 734C329 709 406 747 501 691C608 628 691 660 770 603C865 534 942 557 1036 496C1122 440 1220 453 1386 401"
+    stroke="#F4F0E7"
+    stroke-opacity=".14"
+    stroke-width="1.5"
+    stroke-linecap="round"
+    stroke-dasharray="5 12"
+  />
+
+  <g fill="#E8DDC6">
+    <circle cx="438" cy="650" r="6" fill-opacity=".75" />
+    <circle cx="696" cy="545" r="5" fill-opacity=".58" />
+    <circle cx="934" cy="436" r="6" fill-opacity=".8" />
+    <circle cx="1194" cy="310" r="4" fill-opacity=".5" />
+    <circle cx="1386" cy="234" r="7" fill-opacity=".9" />
+  </g>
+
+  <circle cx="1260" cy="650" r="118" stroke="#F4F0E7" stroke-opacity=".14" />
+  <circle cx="1260" cy="650" r="79" stroke="#F4F0E7" stroke-opacity=".1" />
+  <circle cx="1260" cy="650" r="3" fill="#F4F0E7" fill-opacity=".7" />
+
+  <text
+    x="200"
+    y="118"
+    fill="#F4F0E7"
+    fill-opacity=".8"
+    font-family="Georgia, 'Times New Roman', serif"
+    font-size="34"
+    letter-spacing="7"
+  >PLACEHOLDER FIGURE</text>
+  <text
+    x="200"
+    y="158"
+    fill="#F4F0E7"
+    fill-opacity=".4"
+    font-family="'Segoe UI', Arial, sans-serif"
+    font-size="17"
+    letter-spacing="1.8"
+  >Replace this image in /public/images/content/</text>
+
+  <text
+    x="200"
+    y="832"
+    fill="#F4F0E7"
+    fill-opacity=".32"
+    font-family="'Segoe UI', Arial, sans-serif"
+    font-size="14"
+    letter-spacing="2.2"
+  >RESEARCH · WRITING · STRANGE IDEAS</text>
+</svg>

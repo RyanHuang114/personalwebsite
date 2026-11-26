@@ -1,0 +1,77 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import {
+	assertSequentialId,
+	formatDate,
+	formatDateAttribute,
+} from '../../utils/content';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('research');
+
+	return projects.map((project) => {
+		assertSequentialId('research', project.id);
+
+		return {
+			params: { id: project.id },
+			props: { project },
+		};
+	});
+}
+
+interface Props {
+	project: CollectionEntry<'research'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const hasLinks = Boolean(project.data.doi || project.data.publicationLinks.length);
+---
+
+<ContentLayout
+	title={project.data.title}
+	description={project.data.description}
+	section="research"
+	width="reading"
+>
+	<article class="detail detail--research">
+		<a class="back-link" href="/research/">Research</a>
+
+		<header class="detail-header">
+			<p class="eyebrow">Project {project.id}</p>
+			<h1 class="detail-title">{project.data.title}</h1>
+			<p class="detail-description">{project.data.description}</p>
+
+			<div class="detail-meta">
+				<time datetime={formatDateAttribute(project.data.date)}>
+					{formatDate(project.data.date)}
+				</time>
+				<span>{project.data.field}</span>
+				<span class="status">{project.data.status}</span>
+			</div>
+
+			{
+				hasLinks && (
+					<div class="link-row" aria-label="Publication links">
+						{project.data.doi && (
+							<a href={project.data.doi} target="_blank" rel="noopener noreferrer">
+								DOI
+							</a>
+						)}
+						{project.data.publicationLinks.map((link) => (
+							<a href={link.url} target="_blank" rel="noopener noreferrer">
+								{link.label}
+							</a>
+						))}
+					</div>
+				)
+			}
+		</header>
+
+		<div class="prose prose--research">
+			<Content />
+		</div>
+	</article>
+</ContentLayout>

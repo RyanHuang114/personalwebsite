@@ -1,0 +1,59 @@
+---
+import { getCollection } from 'astro:content';
+import ContentLayout from '../../layouts/ContentLayout.astro';
+import {
+	assertSequentialId,
+	byDateDescending,
+	formatDate,
+	formatDateAttribute,
+} from '../../utils/content';
+
+const articles = (await getCollection('articles')).sort(byDateDescending);
+articles.forEach((article) => assertSequentialId('articles', article.id));
+---
+
+<ContentLayout
+	title="Articles"
+	description="Essays, notes, and longer-form writing."
+	section="articles"
+>
+	<header class="page-header">
+		<p class="eyebrow">Index</p>
+		<h1 class="page-title">Articles</h1>
+	</header>
+
+	{
+		articles.length > 0 ? (
+			<ol class="article-list">
+				{articles.map((article) => (
+					<li>
+						<a class="article-row" href={`/articles/${article.id}/`}>
+							<time
+								class="article-row__date"
+								datetime={formatDateAttribute(article.data.date)}
+							>
+								{formatDate(article.data.date)}
+							</time>
+
+							<div class="article-row__body">
+								<h2 class="article-row__title">{article.data.title}</h2>
+								<p class="article-row__description">{article.data.description}</p>
+								{article.data.tags.length > 0 && (
+									<span class="tag-list">
+										{article.data.tags.map((tag) => (
+											<span class="tag">{tag}</span>
+										))}
+									</span>
+								)}
+							</div>
+
+							<span class="article-row__number">{article.id}</span>
+						</a>
+					</li>
+				))}
+			</ol>
+		) : (
+			<p class="empty-state">No articles yet.</p>
+		)
+	}
+</ContentLayout>
